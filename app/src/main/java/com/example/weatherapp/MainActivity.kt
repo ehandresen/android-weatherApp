@@ -35,6 +35,6 @@ fun WeatherApp(modifier: Modifier = Modifier) {
     // ui will be created while the data is being fetched
     // when the data is fetched, we need to make sure our composable functions are recomposed with the weather data
     WeatherAppTheme {
-        WeatherHomeScreen()
+        WeatherHomeScreen(weatherHomeViewModel.uiState)
     }
 }
