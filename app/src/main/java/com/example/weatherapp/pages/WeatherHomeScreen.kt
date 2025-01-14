@@ -2,8 +2,12 @@ package com.example.weatherapp.pages
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -16,11 +20,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.example.weatherapp.R
 import com.example.weatherapp.customUis.AppBackground
 import com.example.weatherapp.data.CurrentWeather
 import com.example.weatherapp.utils.getFormattedDate
+import com.example.weatherapp.utils.getIconUrl
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,7 +45,7 @@ fun WeatherHomeScreen(
         Scaffold(
             topBar = {
                 TopAppBar(
-                    title = { Text("Weather App", style = MaterialTheme.typography.titleLarge) },
+                    title = { Text("TopAppBar", style = MaterialTheme.typography.titleLarge) },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent,
                         actionIconContentColor = Color.White
@@ -95,6 +104,36 @@ fun CurrentWeatherSection(
             style = MaterialTheme.typography.titleMedium,
             color = Color.White
         )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "${currentWeather.main?.temp?.toInt()}°C",
+            style = MaterialTheme.typography.displayLarge,
+            color = Color.White
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(
+            text = "Feels like ${currentWeather.main?.feelsLike?.toInt()}°C",
+            style = MaterialTheme.typography.titleMedium,
+            color = Color.White
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(getIconUrl(currentWeather.weather?.get(0)?.icon!!))
+                    .crossfade(true)
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier.size((40.dp))
+            )
+            Text(
+                text = currentWeather.weather?.get(0)?.description!!,
+                style = MaterialTheme.typography.titleMedium,
+                color = Color.White
+            )
+        }
+
 
     }
 }

@@ -16,7 +16,7 @@ import com.example.weatherapp.pages.WeatherHomeScreen
 import com.example.weatherapp.pages.WeatherHomeViewModel
 import com.example.weatherapp.ui.theme.WeatherAppTheme
 
-//!! important to give internet permission in the manifest file
+//!! important to give internet permission in the manifest file to communicate with the api
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
